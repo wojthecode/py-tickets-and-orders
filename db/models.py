@@ -74,7 +74,7 @@ class Order(models.Model):
         ordering = ["-created_at"]
 
     def __str__(self) -> str:
-        return str(self.created_at)
+        return f"<Order: {self.created_at}>"
 
 
 class Ticket(models.Model):
@@ -113,7 +113,7 @@ class Ticket(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self) -> str:
-        return "{} {} (row: {}, seat: {})".format(
+        return "<Ticket: {} {} (row: {}, seat: {})>".format(
             self.movie_session.movie.title,
             self.movie_session.show_time,
             self.row,
