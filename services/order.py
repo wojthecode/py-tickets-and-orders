@@ -13,17 +13,15 @@ def create_order(
         date: str | None = None
 ) -> Order:
 
-    order = Order.objects.create(
-        user=get_user_model().objects.get(username=username)
-    )
+    order = Order(user=get_user_model().objects.get(username=username))
 
     if date:
         order.created_at = dt.strptime(date, "%Y-%m-%d %H:%M")
-        order.save()
 
-    occupied_seats = Ticket.objects.values("row", "seat", "movie_session")
+    order.save()
+
     for ticket in tickets:
-        if occupied_seats.filter(
+        if Ticket.objects.filter(
             movie_session=ticket["movie_session"],
             seat=ticket["seat"],
             row=ticket["row"],
